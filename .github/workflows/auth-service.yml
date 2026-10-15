@@ -1,0 +1,29 @@
+name: Testes Auth Service
+
+on:
+  push:
+    branches:[main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-auth-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout de código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12.4
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.6'
+
+      - name: Install dependencies
+        working-directory: ./burguer-app/auth-service
+        run: |
+          pip install -r requirements.txt
+
+      - name: Rodar testes
+        run: |
+          pytest -v --cov=models --cov=services --cov=config --cov=controllers
+          radon cc ./burguer-app/auth-service/models/user_model.py
