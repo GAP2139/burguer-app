@@ -20,6 +20,7 @@ jobs:
                 python-version: '3.12.4'
 
             - name: Install dependencies
+              working-directory: ./burguer-app/auth-service
               run: |
                 pip install -r requirements.txt
 
@@ -41,6 +42,7 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
+          working-directory: ./burguer-app/order-service
           run: |
             pip install -r requirements.txt
 
@@ -63,6 +65,7 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
+          working-directory: ./burguer-app/product-service
           run: |
             pip install -r requirements.txt
 
@@ -85,6 +88,7 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
+          working-directory: ./burguer-app/user-service
           run: |
             pip install -r requirements.txt
 
