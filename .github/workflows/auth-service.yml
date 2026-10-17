@@ -2,9 +2,10 @@ name: Testes Auth Service
 
 on:
   push:
-    branches:[main]
+    branches:
+      - aula-01
   pull_request:
-    branches: [main]
+    branches: [aula-01]
 
 jobs:
   test-auth-service:
@@ -16,7 +17,7 @@ jobs:
       - name: Configurar Python 3.12.4
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9.6'
+          python-version: '3.12.4'
 
       - name: Install dependencies
         working-directory: ./burguer-app/auth-service
