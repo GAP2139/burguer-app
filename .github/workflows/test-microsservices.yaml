@@ -20,12 +20,12 @@ jobs:
                 python-version: '3.12.4'
 
             - name: Install dependencies
-              working-directory: ./burguer-app/auth-service
+              working-directory: .
               run: |
                 pip install -r requirements.txt
 
             - name: Run tests
-              working-directory: ./burguer-app/auth-service
+              working-directory: .
               run: |
                 ls -R
                 pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -42,12 +42,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/order-service
+          working-directory: .
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/order-service
+          working-directory: .
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -65,12 +65,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/product-service
+          working-directory: .
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/product-service
+          working-directory: .
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -88,12 +88,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/user-service
+          working-directory: .
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/user-service
+          working-directory: .
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
