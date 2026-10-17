@@ -2,7 +2,8 @@ name: Test Microservices
 
 on:
     push:
-        branches:[aula-01]
+        branches: 
+          - aula-01
     pull_request:
         branches: [aula-01]
 
@@ -14,7 +15,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Set up Python
-              uses: acttions/setup-python@v2
+              uses: actions/setup-python@v2
               with:
                 python-version: '3.9.6'
 
@@ -37,15 +38,15 @@ jobs:
         - name: Configurar Python 3.12.4
           uses: actions/setup-python@v4
           with:
-          python-version: '3.12.4'
+            python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/order-service
+          working-directory: ./burger-app/order-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/order-service
+          working-directory: ./burger-app/order-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/order_model.py
@@ -62,12 +63,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/product-service
+          working-directory: ./burger-app/product-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/product-service
+          working-directory: ./burger-app/product-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/product_model.py
@@ -84,12 +85,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: ./burguer-app/user-service
+          working-directory: ./burger-app/user-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: ./burguer-app/user-service
+          working-directory: ./burger-app/user-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/user_model.py
