@@ -1,4 +1,4 @@
-name: Test Microservices
+name: Listar arquivos run: ls -R
 
 on:
     push:
@@ -20,12 +20,12 @@ jobs:
                 python-version: '3.12.4'
 
             - name: Install dependencies
-              working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/auth-service
+              working-directory: ./burger-app/auth-service
               run: |
                 pip install -r requirements.txt
 
             - name: Run tests
-              working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/auth-service
+              working-directory: ./burger-app/auth-service
               run: |
                 pytest -v --cov=models --cov=services --cov=config --cov=controllers
                 radon cc ./models/auth_model.py
@@ -41,12 +41,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/order-service
+          working-directory: ./burger-app/order-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/order-service
+          working-directory: ./burger-app/order-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/order_model.py
@@ -63,12 +63,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/product-service
+          working-directory: ./burger-app/product-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/product-service
+          working-directory: ./burger-app/product-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/product_model.py
@@ -85,12 +85,12 @@ jobs:
             python-version: '3.12.4'
 
         - name: Install dependencies
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/user-service
+          working-directory: ./burger-app/user-service
           run: |
             pip install -r requirements.txt
 
         - name: Rodar testes
-          working-directory: /media/gap/Novo volume/alura-python-testes/burger-app/user-service
+          working-directory: ./burger-app/user-service
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/user_model.py
