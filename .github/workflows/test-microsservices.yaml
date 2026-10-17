@@ -1,3 +1,5 @@
+name: Test Microservices
+
 name: Listar arquivos run: ls -R
 
 on:
