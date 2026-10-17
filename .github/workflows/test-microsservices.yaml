@@ -1,7 +1,5 @@
 name: Test Microservices
 
-name: Listar arquivos run: ls -R
-
 on:
     push:
         branches: 
@@ -96,3 +94,6 @@ jobs:
           run: |
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/user_model.py
+
+name: Listar arquivos 
+run: ls -R
