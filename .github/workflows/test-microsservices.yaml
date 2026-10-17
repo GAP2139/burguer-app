@@ -1,5 +1,4 @@
-name: Listar arquivos 
-run: ls -R
+name: Test Microservices
 
 on:
     push:
@@ -28,6 +27,7 @@ jobs:
             - name: Run tests
               working-directory: ./burger-app/auth-service
               run: |
+                ls -R
                 pytest -v --cov=models --cov=services --cov=config --cov=controllers
                 radon cc ./models/auth_model.py
     test-order-service:
@@ -49,6 +49,7 @@ jobs:
         - name: Rodar testes
           working-directory: ./burger-app/order-service
           run: |
+            ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/order_model.py
 
@@ -71,6 +72,7 @@ jobs:
         - name: Rodar testes
           working-directory: ./burger-app/product-service
           run: |
+            ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/product_model.py
 
@@ -93,5 +95,6 @@ jobs:
         - name: Rodar testes
           working-directory: ./burger-app/user-service
           run: |
+            ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
             radon cc ./models/user_model.py
