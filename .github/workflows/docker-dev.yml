@@ -3,10 +3,10 @@ name: Docker dev workflow
 on:
     push:
         branches:
-            -aula-03
+            - aula-03
     pull_request:
         branches:
-            -aula-03
+            - aula-03
 
 jobs:
     docker-up:
