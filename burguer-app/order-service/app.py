@@ -20,5 +20,5 @@ def index():
 
 if __name__ == '__main__':
     # Executa a aplicação Flask
-    app.run(port=5002, debug=True)
+    app.run(host='0.0.0.0', port=5002)
     # O debug=True permite recarregar automaticamente a aplicação ao fazer alterações no código
