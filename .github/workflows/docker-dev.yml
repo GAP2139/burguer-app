@@ -14,12 +14,14 @@ jobs:
         steps:
         - name: Checkout repository
           uses: actions/checkout@v2
+          
         - name: Install Docker Compose
           run:
             sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             docker-compose --version
         - name: Cria .env para todos os serviços
+          working-directory: burguer-app
           run: |
             echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> user-service/.env
             echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> auth-service/.env
