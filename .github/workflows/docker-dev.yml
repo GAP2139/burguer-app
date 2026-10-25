@@ -45,23 +45,29 @@ jobs:
     - name: Test auth-service
       working-directory: burguer-app/auth-service
       run: |
-        pip install -v -r requirements.txt
+        pip install -v -r requirements.txt      
+        pip install pytest pytest-cov  
+        pytest -v
+
     - name: Test User-service
       working-directory: burguer-app/user-service
       run: |
-        pip install -v -r requirements.txt
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
         pytest -v
         
     - name: Test order-service
       working-directory: burguer-app/order-service
       run: |
-        pip install -v -r requirements.txt
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
         pytest -v    
 
     - name: Test product-service
       working-directory: burguer-app/product-service
       run: |
-        pip install -v -r requirements.txt
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
         pytest -v
 
 
