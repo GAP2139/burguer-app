@@ -9,33 +9,33 @@ on:
 
 jobs:
     test-auth-service:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+      runs-on: ubuntu-latest
+      steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
 
-            - name: Set up Python
-              uses: actions/setup-python@v2
-              with:
-                python-version: '3.12.4'
+          - name: Set up Python
+            uses: actions/setup-python@v2
+            with:
+              python-version: '3.12.4'
 
-            - name: Install dependencies
-              working-directory: ./burguer-app/auth-service
-              run: |
-                pip install -r requirements.txt
-            
-            - name: Start containers
-              run: |
-                docker compose up -d
+          - name: Install dependencies
+            working-directory: ./burguer-app/auth-service
+            run: |
+              pip install -r requirements.txt
+          
+          - name: Start containers
+            run: |
+              docker compose -f burguer-app/docker-compose.yml up -d
 
-            - name: Run tests
-              working-directory: .
-              env: 
-                MONGO_URI: mongodb://localhost:27017/auth_db
-              run: |
-                ls -R
-                pytest -v --cov=models --cov=services --cov=config --cov=controllers
-                radon cc ./models/auth_model.py
+          - name: Run tests
+            working-directory: .
+            env: 
+              MONGO_URI: mongodb://localhost:27017/auth_db
+            run: |
+              ls -R
+              pytest -v --cov=models --cov=services --cov=config --cov=controllers
+              radon cc ./models/auth_model.py
     test-order-service:
         runs-on: ubuntu-latest
         steps:
@@ -54,7 +54,7 @@ jobs:
 
         - name: Start containers
           run: |
-            docker compose up -d
+            docker compose -f burguer-app/docker-compose.yml up -d
 
         - name: Rodar testes
           working-directory: .
@@ -83,7 +83,7 @@ jobs:
 
         - name: Start containers
           run: |
-            docker compose up -d
+            docker compose -f burguer-app/docker-compose.yml up -d
 
         - name: Rodar testes
           working-directory: .
@@ -112,8 +112,7 @@ jobs:
 
         - name: Start containers
           run: |
-            docker compose up -d
-
+            docker compose -f burguer-app/docker-compose.yml up -d
         - name: Rodar testes
           working-directory: .
           env: 
