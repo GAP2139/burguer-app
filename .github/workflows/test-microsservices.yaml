@@ -24,18 +24,12 @@ jobs:
             run: |
               pip install -r requirements.txt
           
-          - name: Start containers
-            run: |
-              docker compose -f burguer-app/docker-compose.yml up -d
-
           - name: Run tests
-            working-directory: .
-            env: 
-              MONGO_URI: mongodb://localhost:27017/auth_db
             run: |
               ls -R
               pytest -v --cov=models --cov=services --cov=config --cov=controllers
               radon cc ./models/auth_model.py
+
     test-order-service:
         runs-on: ubuntu-latest
         steps:
@@ -52,14 +46,8 @@ jobs:
           run: |
             pip install -r requirements.txt
 
-        - name: Start containers
-          run: |
-            docker compose -f burguer-app/docker-compose.yml up -d
-
         - name: Rodar testes
           working-directory: .
-          env: 
-            MONGO_URI: mongodb://localhost:27017/order_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -81,14 +69,8 @@ jobs:
           run: |
             pip install -r requirements.txt
 
-        - name: Start containers
-          run: |
-            docker compose -f burguer-app/docker-compose.yml up -d
-
         - name: Rodar testes
           working-directory: .
-          env: 
-            MONGO_URI: mongodb://localhost:27017/product_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -110,13 +92,8 @@ jobs:
           run: |
             pip install -r requirements.txt
 
-        - name: Start containers
-          run: |
-            docker compose -f burguer-app/docker-compose.yml up -d
         - name: Rodar testes
           working-directory: .
-          env: 
-            MONGO_URI: mongodb://localhost:27017/user_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers

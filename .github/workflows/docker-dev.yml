@@ -3,80 +3,70 @@ name: Docker dev workflow
 on:
     push:
         branches:
-            - aula-03
+        - aula-03
     pull_request:
         branches:
-            - aula-03
+        - aula-03
 
 jobs:
-    docker-up:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
-          
-        - name: Install Docker Compose
-          working-directory: burguer-app
-          run: |
-            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            docker-compose --version
-        - name: Cria .env para todos os serviços
-          working-directory: burguer-app
-          run: |
-            echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> user-service/.env
-            echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> auth-service/.env
-            echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> product-service/.env
-            echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> order-service/.env
-        - name: Build and run Docker containers
-          working-directory: burguer-app
-          run: |
-            docker-compose -f docker-compose.yml -f docker-compose.override.yml down
-            docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d --build
+  docker-up:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Install Docker Compose
+      run: |
+        sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
+
+    - name: Cria .env para todos os serviços
+      working-directory: burguer-app
+      run: |
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" > user-service/.env
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" > auth-service/.env
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" > product-service/.env
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" > order-service/.env
+
+    - name: Build and run Docker containers
+      working-directory: burguer-app
+      run: |
+        docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+        docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d --build
+
+    - name: Waiting for mongo to be ready
+      run: sleep 20
+
+    - name: Test auth-service
+      working-directory: burguer-app/auth-service
+      run: |
+        pip install -r requirements.txt
+        pytest -v
+    
+    - name: Test User-service
+      working-directory: burguer-app/user-service
+      run: |
+        pip install -r requirements.txt
+        pytest -v
         
-        - name: Waiting for mongo to be ready
-          run: sleep 20
+    - name: Test order-service
+      working-directory: burguer-app/order-service
+      run: |
+        pip install -r requirements.txt
+        pytest -v    
 
-        - name: Test auth-service
-          working-directory: burguer-app/auth-service
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install pytest pytest-cov
-            pip install -r requirements.txt
-            pytest --cov=. --cov-report=term-missing --cov-branch --cov-fail-under=10
+    - name: Test product-service
+      working-directory: burguer-app/product-service
+      run: |
+        pip install -r requirements.txt
+        pytest -v
 
-        - name: Test User-service
-          working-directory: burguer-app/user-service
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install pytest pytest-cov
-            pip install -r requirements.txt
-            pytest -v
 
-        - name: Test order-service
-          working-directory: burguer-app/order-service
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install pytest pytest-cov
-            pip install -r requirements.txt
-            pytest -v
-
-        - name: Test product-service
-          working-directory: burguer-app/product-service
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install pytest pytest-cov
-            pip install -r requirements.txt
-            pytest -v
-
-        - name: Shut Down Docker containers
-          working-directory: burguer-app
-          run: docker-compose down
+    - name: Shut down Docker containers
+      working-directory: burguer-app
+      run: docker-compose down    
