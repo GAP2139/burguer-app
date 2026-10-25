@@ -45,6 +45,8 @@ jobs:
     - name: Test auth-service
       working-directory: burguer-app/auth-service
       run: |
+        python -m venv venv
+        source venv/bin/activate 
         pip install -v -r requirements.txt      
         pip install pytest pytest-cov  
         pytest -v
