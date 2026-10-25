@@ -3,9 +3,9 @@ name: Test Microservices
 on:
     push:
         branches: 
-          - aula-03
+          - aula-01
     pull_request:
-        branches: [aula-03]
+        branches: [aula-01]
 
 jobs:
     test-auth-service:
