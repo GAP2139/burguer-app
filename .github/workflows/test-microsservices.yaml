@@ -3,9 +3,9 @@ name: Test Microservices
 on:
     push:
         branches: 
-          - aula-01
+          - aula-03
     pull_request:
-        branches: [aula-01]
+        branches: [aula-03]
 
 jobs:
     test-auth-service:
@@ -23,9 +23,14 @@ jobs:
               working-directory: ./burguer-app/auth-service
               run: |
                 pip install -r requirements.txt
+            
+            - name: Start containers
+              run: docker-compose up -d
 
             - name: Run tests
               working-directory: .
+              env: 
+                MONGO_URI: mongodb://localhost:27017/auth_db
               run: |
                 ls -R
                 pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -46,8 +51,13 @@ jobs:
           run: |
             pip install -r requirements.txt
 
+        - name: Start containers
+          run: docker-compose up -d
+
         - name: Rodar testes
           working-directory: .
+          env: 
+            MONGO_URI: mongodb://localhost:27017/order_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -69,8 +79,13 @@ jobs:
           run: |
             pip install -r requirements.txt
 
+        - name: Start containers
+          run: docker-compose up -d
+
         - name: Rodar testes
           working-directory: .
+          env: 
+            MONGO_URI: mongodb://localhost:27017/product_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
@@ -92,8 +107,13 @@ jobs:
           run: |
             pip install -r requirements.txt
 
+        - name: Start containers
+          run: docker-compose up -d
+
         - name: Rodar testes
           working-directory: .
+          env: 
+            MONGO_URI: mongodb://localhost:27017/user_db
           run: |
             ls -R
             pytest -v --cov=models --cov=services --cov=config --cov=controllers
